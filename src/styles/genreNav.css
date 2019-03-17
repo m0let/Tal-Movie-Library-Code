@@ -1,0 +1,11 @@
+.genreNavContainer {
+    background-color: dimgrey;
+}
+
+#dropdown-basic {
+    padding: 0 10px;
+    height: 38px;
+    line-height: 22px;
+    margin-top: 4px;
+    margin-left: 5px;
+}
