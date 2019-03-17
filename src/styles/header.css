@@ -1,0 +1,40 @@
+.headerContainer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #343a40 !important;
+    color: white;
+    font-size: 20px;
+    position: sticky;
+    z-index: 100;
+    top: 0;
+}
+
+.searchBar {
+    display: flex;
+}
+
+.searchBar input {
+    padding: 5px;
+    padding-left: 10px;
+    border-radius: 10px;
+    outline: unset;
+    width: 100%;
+    min-width: 150px;
+}
+
+@media screen and (min-width: 700px) {
+    .searchBar {
+        width: 30%;
+    }
+}
+
+@media screen and (max-width: 699px) {
+    .searchBar {
+        width: 100%;
+        max-width: 300px;
+        min-width: 150px;
+    }
+}

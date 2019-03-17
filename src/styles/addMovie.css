@@ -1,0 +1,9 @@
+.addMovieButtonsContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.addMovieButtonsContainer button {
+    width: 75px;
+}

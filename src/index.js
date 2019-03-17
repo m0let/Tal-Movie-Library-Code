@@ -1,12 +1,55 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import { Provider } from "react-redux";
+import rootReducer from "./reducers/index.js";
+import { createStore } from "redux";
+import { addMovie } from "./actions/index.js";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+/* CREATE THE STORE */
+const store = createStore(rootReducer);
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+/* ALL THE CURRENT MOVIES  */
+const moviesArray = [
+    "The Mummy",
+    "Lord Of The Rings",
+    "Harry Potter",
+    "Saw",
+    "Twilight",
+    "Ted",
+    "Finding nemo",
+    "The incredibles",
+    "Lone survivor",
+    "Law abiding citizen",
+    "Avatar",
+    "The notebook"
+];
+
+/* FETCH MOVIES FUNC */
+const fetchMovies = async movieName => {
+    const url = `https://www.omdbapi.com/?apikey=34f9503e&t=${movieName}`;
+    const data = await fetch(url);
+    const json = await data.json();
+    const {
+        Title: title,
+        Year: year,
+        Runtime: runtime,
+        Genre: genre,
+        Director: director,
+        Poster: image,
+        Plot: plot
+    } = json;
+    const movieData = { title, year, runtime, genre, director, image, plot };
+    store.dispatch(addMovie(movieData));
+};
+
+for (let i = 0; i < moviesArray.length; i++) {
+    fetchMovies(moviesArray[i]);
+}
+
+ReactDOM.render(
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.getElementById("root")
+);

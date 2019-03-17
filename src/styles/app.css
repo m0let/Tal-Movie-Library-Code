@@ -1,0 +1,21 @@
+.appContainer {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background-color: #242422;
+}
+
+.allMoviesContainer {
+    display: grid;
+    padding: 20px;
+    grid-gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    justify-items: center;
+    align-items: center;
+}
+
+@media screen and (max-width: 330px) {
+    .allMoviesContainer {
+        padding: 20px 0;
+    }
+}
