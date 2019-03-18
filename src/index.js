@@ -31,7 +31,7 @@ const fetchMovies = async movieName => {
     const data = await fetch(url);
     const json = await data.json();
     const {
-        Title: title,
+        Title,
         Year: year,
         Runtime: runtime,
         Genre: genre,
@@ -39,6 +39,9 @@ const fetchMovies = async movieName => {
         Poster: image,
         Plot: plot
     } = json;
+    let title = Title.replace(/\w\S*/g, txt => {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    }).trim();
     const movieData = { title, year, runtime, genre, director, image, plot };
     store.dispatch(addMovie(movieData));
 };

@@ -20,18 +20,6 @@ class ManageMovieCard extends React.Component {
         };
     }
 
-    componentDidMount() {
-        this.fixMoviesTitleNames();
-    }
-
-    fixMoviesTitleNames = () => {
-        let allCurrentMovies = [...this.state.allCurrentMovies];
-        for (let i = 0; i < allCurrentMovies.length; i++) {
-            allCurrentMovies[i].title = this.capitalizeWords(allCurrentMovies[i].title);
-        }
-        this.setState({ allCurrentMovies });
-    };
-
     componentDidUpdate(prevProps, prevState) {
         if (prevState.allCurrentMovies !== this.props.state.movies) {
             const allCurrentMovies = this.props.state.movies;
