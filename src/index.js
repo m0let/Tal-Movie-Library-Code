@@ -31,6 +31,7 @@ const fetchMovies = async movieName => {
     const data = await fetch(url);
     const json = await data.json();
     const {
+        imdbID: id,
         Title,
         Year: year,
         Runtime: runtime,
@@ -42,7 +43,7 @@ const fetchMovies = async movieName => {
     let title = Title.replace(/\w\S*/g, txt => {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     }).trim();
-    const movieData = { title, year, runtime, genre, director, image, plot };
+    const movieData = { id, title, year, runtime, genre, director, image, plot };
     store.dispatch(addMovie(movieData));
 };
 

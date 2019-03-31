@@ -1,3 +1,5 @@
+import { stat } from "fs";
+
 const initialState = {
     movies: [],
     filterMoviesByName: "",
@@ -17,15 +19,16 @@ export default (state = initialState, action) => {
             const newStateAfterDeleteTheSelectedMovie = state.movies.filter(movie => {
                 return movie.id !== action.movieIdToDelete;
             });
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 movies: newStateAfterDeleteTheSelectedMovie
-            });
+            };
         case "ADD_NEW_MOVIE":
-            const newMovie = { id: action.id, ...action.movieToAdd };
-            const newState = [...state.movies, newMovie];
-            return Object.assign({}, state, {
-                movies: newState
-            });
+            const newMovie = { ...action.movieToAdd };
+            return {
+                ...state,
+                movies: [...state.movies, newMovie]
+            };
         case "DISPLAY_FILTERED_MOVIES_BY_NAME":
             return Object.assign({}, state, {
                 filterMoviesByName: action.movieName

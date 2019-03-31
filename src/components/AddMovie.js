@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import Loader from "./Loader";
 import AddMovieError from "./AddMovieError";
 import "../styles/addMovie.css";
+import Alert from "react-bootstrap/Alert";
 
 class ManageAddMovie extends React.Component {
     constructor(props) {
@@ -14,7 +15,8 @@ class ManageAddMovie extends React.Component {
             displayErrorMessage: false,
             errorMessage: "",
             displayLoader: false,
-            disabledAddButton: false
+            disabledAddButton: false,
+            showMovieSuccessfullyAddedMessage: false
         };
     }
 
@@ -63,6 +65,7 @@ class ManageAddMovie extends React.Component {
         const { Response } = json;
         if (Response !== "False") {
             const {
+                imdbID: id,
                 Title: title,
                 Year: year,
                 Runtime: runtime,
@@ -71,12 +74,19 @@ class ManageAddMovie extends React.Component {
                 Poster: image,
                 Plot: plot
             } = json;
-            const movieData = { title, year, runtime, genre, director, image, plot };
+            const movieData = { id, title, year, runtime, genre, director, image, plot };
             this.props.addMovie({
                 ...movieData,
                 title: movieName
             });
-            this.onCloseModal();
+            this.setState({
+                displayErrorMessage: false,
+                displayLoader: false,
+                showMovieSuccessfullyAddedMessage: true
+            });
+            setTimeout(() => {
+                this.onCloseModal();
+            }, 2500);
         } else {
             this.setState({
                 displayErrorMessage: true,
@@ -115,7 +125,8 @@ class ManageAddMovie extends React.Component {
             displayErrorMessage: false,
             errorMessage: "",
             disabledAddButton: false,
-            displayLoader: false
+            displayLoader: false,
+            showMovieSuccessfullyAddedMessage: false
         });
     };
 
@@ -180,6 +191,10 @@ class ManageAddMovie extends React.Component {
                                 <div className="centerText">
                                     <Loader />
                                 </div>
+                            )}
+                            {/*   Movie Successfully Added Message */}
+                            {this.state.showMovieSuccessfullyAddedMessage && (
+                                <Alert variant="success">Movie Successfully Added</Alert>
                             )}
                             {/*    Error Messages    */}
                             {this.state.displayErrorMessage && (

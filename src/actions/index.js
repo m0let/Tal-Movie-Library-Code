@@ -1,4 +1,4 @@
-let nextMovieId = 0;
+// let nextMovieId = 0;
 
 export const editMovie = movieToEdit => ({
     type: "EDIT_MOVIE",
@@ -12,8 +12,8 @@ export const deleteMovie = movieIdToDelete => ({
 
 export const addMovie = movieToAdd => ({
     type: "ADD_NEW_MOVIE",
-    movieToAdd,
-    id: nextMovieId++
+    movieToAdd
+    // id: nextMovieId++
 });
 
 export const filteredMoviesByName = movieName => ({

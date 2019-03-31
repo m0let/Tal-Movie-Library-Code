@@ -3,17 +3,12 @@ import Button from "react-bootstrap/Button";
 import "../styles/movieCard.css";
 
 const MovieCard = props => {
-    if (props.toFixFlip) {
-        localStorage.removeItem("movieDeleted");
-        /*  bug ( when deleting movie that surrounded by other movies it's auto flip the right movie card ) */
-        /*  to fix it over all the cards and remove the is-flipped class  */
-        for (let i = 0; i < document.getElementsByClassName("card").length; i++) {
-            document.getElementsByClassName("card")[i].classList.remove("is-flipped");
-        }
-    }
     const transformCard = (cardId, e) => {
-        let mycard = document.getElementById(`${cardId}`);
-        mycard.classList.toggle("is-flipped");
+        /* Do not transform the card if Some of the buttons was clicked  */
+        if (e.target.innerText !== "Delete" && e.target.innerText !== "Edit") {
+            let mycard = document.getElementById(`${cardId}`);
+            mycard.classList.toggle("is-flipped");
+        }
     };
     return (
         <div className="scene centerText">
@@ -46,12 +41,10 @@ const MovieCard = props => {
                         <p className="leftText">
                             <strong>Genre:</strong> {props.genre}
                         </p>
-                        {/*    Duplicate just because we need to disabled the transform when delete or edit clicked */}
                         <div className="buttonContainer">
                             <Button
                                 onClick={e => {
                                     props.showEditModal(props.id);
-                                    transformCard(props.id, e);
                                 }}
                                 size="small"
                                 variant="outline-success"
@@ -61,7 +54,6 @@ const MovieCard = props => {
                             <Button
                                 onClick={e => {
                                     props.showDeleteModal(props.id);
-                                    transformCard(props.id, e);
                                 }}
                                 size="small"
                                 variant="outline-danger"

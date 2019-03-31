@@ -186,17 +186,28 @@ class ManageMovieCard extends React.Component {
     };
 
     render() {
-        const movieDeleted = localStorage.getItem("movieDeleted") === "true";
         let moviesToDisplay;
-        /*  DISPLAY FILTERED MOVIES BY GENRE */
         if (this.props.state.filterMoviesByGenre !== "") {
             moviesToDisplay = this.state.allCurrentMovies.filter(movie => {
-                return movie.genre
-                    .toLowerCase()
-                    .includes(this.props.state.filterMoviesByGenre.toLowerCase());
+                /* DISPLAY FiLTERED MOVIE BY GENRE AND MOVIE NAME */
+                if (this.props.state.filterMoviesByName !== "") {
+                    return (
+                        movie.title
+                            .toLowerCase()
+                            .includes(this.props.state.filterMoviesByName.toLowerCase()) &&
+                        movie.genre
+                            .toLowerCase()
+                            .includes(this.props.state.filterMoviesByGenre.toLowerCase())
+                    );
+                } else {
+                    /* DISPLAY FILTERED MOVIE ONLY BY GENRE */
+                    return movie.genre
+                        .toLowerCase()
+                        .includes(this.props.state.filterMoviesByGenre.toLowerCase());
+                }
             });
         } else {
-            /*   DISPLAY aLL MOVIES OR FILTERED MOVIES BY MOVIE NAME  */
+            /*   DISPLAY ALL MOVIES OR FILTERED MOVIES BY MOVIE NAME  */
             moviesToDisplay = this.state.allCurrentMovies.filter(movie => {
                 return movie.title
                     .toLowerCase()
@@ -211,8 +222,8 @@ class ManageMovieCard extends React.Component {
                         showDeleteModal={this.showDeleteModal}
                         {...movie}
                         showEditModal={this.handleEditMovie}
-                        key={index}
-                        toFixFlip={movieDeleted}
+                        key={movie.id}
+                        // key={index}
                     />
                 ))}
                 {this.state.showEditModal && (
@@ -307,7 +318,6 @@ class ManageMovieCard extends React.Component {
                         <Button
                             onClick={() => {
                                 this.onCloseModal();
-                                localStorage.setItem("movieDeleted", true);
                                 this.props.deleteMovie(this.holdMovieIdToDelete);
                             }}
                             size="small"
